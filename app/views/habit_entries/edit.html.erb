@@ -1,0 +1,13 @@
+<% content_for :title, "Edit entry" %>
+
+<div class="mb-6">
+  <h1 class="text-2xl font-bold text-gray-900">Edit entry</h1>
+  <p class="text-sm text-gray-500 mt-1">
+    <span class="font-medium text-gray-700"><%= @habit.name %></span>
+    · <%= @entry.date&.strftime("%A, %b %-d") %>
+  </p>
+</div>
+
+<div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+  <%= render "form", entry: @entry %>
+</div>

@@ -10,10 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_05_31_185253) do
+ActiveRecord::Schema[8.1].define(version: 2026_05_31_190646) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pgcrypto"
+
+  create_table "habit_entries", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.boolean "completed", default: false, null: false
+    t.datetime "created_at", null: false
+    t.date "date", null: false
+    t.uuid "habit_id", null: false
+    t.text "note"
+    t.datetime "updated_at", null: false
+    t.index ["habit_id"], name: "index_habit_entries_on_habit_id"
+  end
 
   create_table "habits", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.datetime "created_at", null: false
@@ -38,5 +48,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_05_31_185253) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "habit_entries", "habits"
   add_foreign_key "habits", "users"
 end
