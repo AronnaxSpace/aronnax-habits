@@ -4,5 +4,6 @@ FactoryBot.define do
 
     name { FFaker::HipsterIpsum.word }
     description { FFaker::HipsterIpsum.sentence }
+    start_date { Date.current - 1.day }
   end
 end

@@ -3,12 +3,14 @@ describe "/habits", type: :request do
 
   let(:valid_attributes) do
     {
-      name: "My Habit"
+      name: "My Habit",
+      start_date: Date.current
     }
   end
   let(:invalid_attributes) do
     {
-      name: ""
+      name: "",
+      start_date: nil
     }
   end
   let(:habit) { create(:habit, user: user) }
