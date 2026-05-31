@@ -1,5 +1,9 @@
-require 'rails_helper'
+describe Habit, type: :model do
+  describe "associations" do
+    it { is_expected.to belong_to(:user) }
+  end
 
-RSpec.describe Habit, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  describe "validations" do
+    it { is_expected.to validate_presence_of(:name) }
+  end
 end
