@@ -25,22 +25,61 @@
 
   <body class="bg-gray-50 min-h-screen">
     <% if user_signed_in? %>
-      <nav class="bg-white border-b border-gray-200">
-        <div class="max-w-3xl mx-auto px-4 py-3 flex items-center justify-between">
-          <%= link_to "Aronnax Habits", habits_path, class: "text-lg font-semibold text-indigo-600 hover:text-indigo-800" %>
-          <div class="flex items-center gap-4 text-sm text-gray-600">
-            <span><%= current_user.email %></span>
-            <%= link_to "Account", edit_user_registration_path, class: "hover:text-indigo-600" %>
-            <%= button_to "Sign out", destroy_user_session_path, method: :delete, class: "text-gray-600 hover:text-red-600 cursor-pointer bg-transparent border-none p-0" %>
-          </div>
+      <div data-controller="drawer">
+        <%# Mobile top bar %>
+        <div class="md:hidden fixed top-0 inset-x-0 h-14 bg-white border-b border-gray-200 flex items-center justify-between px-4 z-20">
+          <%= link_to "Aronnax Habits", habits_path, class: "text-base font-semibold text-indigo-600" %>
+          <button data-action="click->drawer#open" class="p-1 text-gray-500 hover:text-gray-800" aria-label="Open menu">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          </button>
         </div>
-      </nav>
+
+        <%# Backdrop (mobile drawer overlay) %>
+        <div data-drawer-target="backdrop" data-action="click->drawer#close"
+             class="hidden fixed inset-0 bg-black/40 z-30 md:hidden"></div>
+
+        <%# Sidebar %>
+        <aside data-drawer-target="sidebar"
+               class="fixed top-0 left-0 h-full w-64 bg-white border-r border-gray-200 flex flex-col z-40 transition-transform duration-200 -translate-x-full md:translate-x-0">
+          <div class="px-5 py-5 border-b border-gray-100">
+            <%= link_to "Aronnax Habits", habits_path, class: "text-lg font-semibold text-indigo-600 hover:text-indigo-800" %>
+          </div>
+
+          <nav class="flex-1 px-3 py-4 space-y-1">
+            <%= link_to habits_path, data: { action: "click->drawer#close" },
+                class: "flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium text-gray-700 hover:bg-indigo-50 hover:text-indigo-700" do %>
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+              </svg>
+              My Habits
+            <% end %>
+          </nav>
+
+          <div class="px-4 py-4 border-t border-gray-100 space-y-3">
+            <p class="text-xs text-gray-400 truncate"><%= current_user.email %></p>
+            <%= link_to "Account settings", edit_user_registration_path,
+                data: { action: "click->drawer#close" },
+                class: "block text-sm text-gray-600 hover:text-indigo-600" %>
+            <%= button_to "Sign out", destroy_user_session_path, method: :delete,
+                class: "text-sm text-gray-600 hover:text-red-600 cursor-pointer bg-transparent border-none p-0 w-full text-left" %>
+          </div>
+        </aside>
+
+        <%# Main content %>
+        <div class="md:ml-64 pt-14 md:pt-0 min-h-screen">
+          <%= render "shared/flash" %>
+          <main class="max-w-3xl mx-auto px-4 py-8">
+            <%= yield %>
+          </main>
+        </div>
+      </div>
+    <% else %>
+      <%= render "shared/flash" %>
+      <main class="px-4 py-8">
+        <%= yield %>
+      </main>
     <% end %>
-
-    <%= render "shared/flash" %>
-
-    <main class="max-w-3xl mx-auto px-4 py-8">
-      <%= yield %>
-    </main>
   </body>
 </html>

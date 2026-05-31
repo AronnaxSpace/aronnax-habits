@@ -4,5 +4,8 @@
 
 import { application } from "./application"
 
+import DrawerController from "./drawer_controller"
+application.register("drawer", DrawerController)
+
 import HelloController from "./hello_controller"
 application.register("hello", HelloController)
