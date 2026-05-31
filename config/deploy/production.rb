@@ -1,3 +1,8 @@
+server ENV.fetch("PRODUCTION_SERVER_IP"), user: "deploy", roles: %w[app db web]
+
+set :deploy_to, "/home/deploy/apps/aronnax_habits"
+set :branch, "main"
+
 # server-based syntax
 # ======================
 # Defines a single server with a list of roles and multiple properties.
