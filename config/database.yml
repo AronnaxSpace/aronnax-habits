@@ -81,5 +81,4 @@ test:
 production:
   <<: *default
   database: aronnax_habits_production
-  username: aronnax_habits
-  password: <%= ENV["ARONNAX_HABITS_DATABASE_PASSWORD"] %>
+  username: deploy
