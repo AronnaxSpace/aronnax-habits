@@ -1,16 +1,19 @@
-<p style="color: green"><%= notice %></p>
-
 <% content_for :title, "Habits" %>
 
-<h1>Habits</h1>
-
-<div id="habits">
-  <% @habits.each do |habit| %>
-    <%= render habit %>
-    <p>
-      <%= link_to "Show this habit", habit %>
-    </p>
-  <% end %>
+<div class="flex items-center justify-between mb-6">
+  <h1 class="text-2xl font-bold text-gray-900">My Habits</h1>
+  <%= link_to "New Habit", new_habit_path, class: "bg-indigo-600 text-white text-sm font-medium px-4 py-2 rounded-lg hover:bg-indigo-700" %>
 </div>
 
-<%= link_to "New habit", new_habit_path %>
+<% if @habits.any? %>
+  <div id="habits" class="flex flex-col gap-3">
+    <% @habits.each do |habit| %>
+      <%= render habit %>
+    <% end %>
+  </div>
+<% else %>
+  <div class="text-center py-16 text-gray-400">
+    <p class="text-lg font-medium">No habits yet</p>
+    <p class="text-sm mt-1">Start building your routine by adding your first habit.</p>
+  </div>
+<% end %>

@@ -23,7 +23,24 @@
     <%= javascript_include_tag "application", "data-turbo-track": "reload", type: "module" %>
   </head>
 
-  <body>
-    <%= yield %>
+  <body class="bg-gray-50 min-h-screen">
+    <% if user_signed_in? %>
+      <nav class="bg-white border-b border-gray-200">
+        <div class="max-w-3xl mx-auto px-4 py-3 flex items-center justify-between">
+          <%= link_to "Aronnax Habits", habits_path, class: "text-lg font-semibold text-indigo-600 hover:text-indigo-800" %>
+          <div class="flex items-center gap-4 text-sm text-gray-600">
+            <span><%= current_user.email %></span>
+            <%= link_to "Account", edit_user_registration_path, class: "hover:text-indigo-600" %>
+            <%= button_to "Sign out", destroy_user_session_path, method: :delete, class: "text-gray-600 hover:text-red-600 cursor-pointer bg-transparent border-none p-0" %>
+          </div>
+        </div>
+      </nav>
+    <% end %>
+
+    <%= render "shared/flash" %>
+
+    <main class="max-w-3xl mx-auto px-4 py-8">
+      <%= yield %>
+    </main>
   </body>
 </html>

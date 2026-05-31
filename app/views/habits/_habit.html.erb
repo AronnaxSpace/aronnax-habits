@@ -1,17 +1,14 @@
-<div id="<%= dom_id habit %>">
-  <div>
-    <strong>Name:</strong>
-    <%= habit.name %>
+<div id="<%= dom_id habit %>" class="bg-white rounded-xl shadow-sm border border-gray-100 p-5">
+  <div class="flex items-start justify-between gap-4">
+    <div class="flex-1 min-w-0">
+      <h2 class="text-lg font-semibold text-gray-900 truncate"><%= habit.name %></h2>
+      <% if habit.description.present? %>
+        <p class="mt-1 text-sm text-gray-500"><%= habit.description %></p>
+      <% end %>
+    </div>
+    <div class="flex items-center gap-3 shrink-0 text-sm">
+      <%= link_to "View", habit, class: "text-indigo-600 hover:text-indigo-800 font-medium" %>
+      <%= link_to "Edit", edit_habit_path(habit), class: "text-gray-500 hover:text-gray-700" %>
+    </div>
   </div>
-
-  <div>
-    <strong>Description:</strong>
-    <%= habit.description %>
-  </div>
-
-  <div>
-    <strong>User:</strong>
-    <%= habit.user_id %>
-  </div>
-
 </div>

@@ -1,12 +1,14 @@
-<% content_for :title, "Editing habit" %>
+<% content_for :title, "Edit Habit" %>
 
-<h1>Editing habit</h1>
+<div class="mb-6">
+  <h1 class="text-2xl font-bold text-gray-900">Edit Habit</h1>
+  <div class="flex gap-3 mt-1 text-sm text-gray-500">
+    <%= link_to "View habit", @habit, class: "hover:text-gray-700" %>
+    <span>·</span>
+    <%= link_to "Back to habits", habits_path, class: "hover:text-gray-700" %>
+  </div>
+</div>
 
-<%= render "form", habit: @habit %>
-
-<br>
-
-<div>
-  <%= link_to "Show this habit", @habit %> |
-  <%= link_to "Back to habits", habits_path %>
+<div class="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+  <%= render "form", habit: @habit %>
 </div>
