@@ -12,10 +12,12 @@ Rails.application.routes.draw do
   devise_for :users
 
   authenticated :user do
-    root to: "habits#index", as: :authenticated_root
+    root to: "dashboard#index", as: :authenticated_root
   end
 
   root "welcome#index"
 
-  resources :habits
+  resources :habits do
+    resources :habit_entries, path: "entries", as: :entries, only: %i[new create edit update]
+  end
 end

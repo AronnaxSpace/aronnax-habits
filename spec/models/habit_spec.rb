@@ -1,6 +1,7 @@
 describe Habit, type: :model do
   describe "associations" do
     it { is_expected.to belong_to(:user) }
+    it { is_expected.to have_many(:entries) }
   end
 
   describe "validations" do
