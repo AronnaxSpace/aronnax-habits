@@ -1,12 +1,12 @@
-<div id="<%= dom_id habit %>" class="bg-white rounded-xl shadow-sm border border-gray-100 p-5">
+<div id="<%= dom_id habit %>" class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 p-5">
   <div class="flex items-start justify-between gap-4">
     <div class="flex-1 min-w-0">
-      <h2 class="text-lg font-semibold text-gray-900 truncate"><%= habit.name %></h2>
+      <h2 class="text-lg font-semibold text-gray-900 dark:text-gray-100 truncate"><%= habit.name %></h2>
       <% if habit.description.present? %>
-        <p class="mt-1 text-sm text-gray-500"><%= habit.description %></p>
+        <p class="mt-1 text-sm text-gray-500 dark:text-gray-400"><%= habit.description %></p>
       <% end %>
-      <div class="mt-2 flex flex-wrap items-center gap-2 text-xs text-gray-400">
-        <span class="font-medium text-gray-500"><%= habit.frequency_label %></span>
+      <div class="mt-2 flex flex-wrap items-center gap-2 text-xs text-gray-400 dark:text-gray-500">
+        <span class="font-medium text-gray-500 dark:text-gray-400"><%= habit.frequency_label %></span>
         <span>
           <%= habit.start_date.strftime("%b %-d, %Y") %>
           <% if habit.end_date.present? %>
@@ -17,7 +17,7 @@
     </div>
     <div class="flex items-center gap-3 shrink-0 text-sm">
       <%= link_to "View", habit, class: "text-indigo-600 hover:text-indigo-800 font-medium" %>
-      <%= link_to "Edit", edit_habit_path(habit), class: "text-gray-500 hover:text-gray-700" %>
+      <%= link_to "Edit", edit_habit_path(habit), class: "text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300" %>
     </div>
   </div>
 </div>

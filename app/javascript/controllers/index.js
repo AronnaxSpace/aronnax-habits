@@ -9,3 +9,6 @@ application.register("collapsible", CollapsibleController)
 
 import DrawerController from "./drawer_controller"
 application.register("drawer", DrawerController)
+
+import ThemeController from "./theme_controller"
+application.register("theme", ThemeController)
