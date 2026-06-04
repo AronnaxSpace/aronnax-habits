@@ -4,8 +4,8 @@
 
 import { application } from "./application"
 
+import CollapsibleController from "./collapsible_controller"
+application.register("collapsible", CollapsibleController)
+
 import DrawerController from "./drawer_controller"
 application.register("drawer", DrawerController)
-
-import HelloController from "./hello_controller"
-application.register("hello", HelloController)

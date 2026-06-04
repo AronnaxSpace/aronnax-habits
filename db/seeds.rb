@@ -23,11 +23,13 @@ require "ffaker"
   habit_names.each do |name|
     start_date = Date.current - rand(14..60).days
     end_date   = [ true, false, false ].sample ? start_date + rand(30..90).days : nil
+    frequency  = Habit.frequencies.keys.sample
 
     habit = user.habits.find_or_create_by!(name:) do |h|
       h.start_date = start_date
       h.end_date   = end_date
-      puts "  Created habit: #{name} (#{start_date} – #{end_date || "ongoing"})"
+      h.frequency  = frequency
+      puts "  Created habit: #{name} (#{h.frequency_label}, #{start_date} – #{end_date || "ongoing"})"
     end
 
     entry_dates = (habit.start_date..[ Date.current, habit.end_date || Date.current ].min).to_a

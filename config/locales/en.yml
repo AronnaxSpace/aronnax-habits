@@ -28,4 +28,11 @@
 #       enabled: "ON"
 
 en:
-  hello: "Hello world"
+  activerecord:
+    attributes:
+      habit:
+        frequencies:
+          daily: "Every day"
+          weekly: "Once a week"
+          twice_a_week: "Twice a week"
+          thrice_a_week: "Three times a week"

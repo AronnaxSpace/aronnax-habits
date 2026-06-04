@@ -52,6 +52,6 @@ class HabitsController < ApplicationController
   end
 
   def habit_params
-    params.expect(habit: [ :name, :description, :start_date, :end_date ])
+    params.expect(habit: [ :name, :description, :frequency, :start_date, :end_date ])
   end
 end

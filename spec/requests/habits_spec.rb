@@ -4,6 +4,7 @@ describe "/habits", type: :request do
   let(:valid_attributes) do
     {
       name: "My Habit",
+      frequency: "twice_a_week",
       start_date: Date.current
     }
   end
@@ -55,6 +56,11 @@ describe "/habits", type: :request do
         }.to change(Habit, :count).by(1)
       end
 
+      it "sets the selected frequency" do
+        post habits_url, params: { habit: valid_attributes }
+        expect(user.habits.last.frequency).to eq("twice_a_week")
+      end
+
       it "redirects to the created habit" do
         post habits_url, params: { habit: valid_attributes }
         expect(response).to redirect_to(habit_url(user.habits.last))
@@ -79,7 +85,8 @@ describe "/habits", type: :request do
     context "with valid parameters" do
       let(:new_attributes) {
         {
-          name: "Updated Habit Name"
+          name: "Updated Habit Name",
+          frequency: "weekly"
         }
       }
 
@@ -87,6 +94,7 @@ describe "/habits", type: :request do
         patch habit_url(habit), params: { habit: new_attributes }
         habit.reload
         expect(habit.name).to eq("Updated Habit Name")
+        expect(habit.frequency).to eq("weekly")
       end
 
       it "redirects to the habit" do
