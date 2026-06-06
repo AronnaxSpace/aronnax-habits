@@ -5,5 +5,15 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   # associations
+  has_one :profile, dependent: :destroy
   has_many :habits, dependent: :destroy
+
+  # callbacks
+  after_create :add_profile
+
+  private
+
+  def add_profile
+    create_profile(nickname: UniqueNicknameGenerator.generate(email.split("@").first))
+  end
 end
