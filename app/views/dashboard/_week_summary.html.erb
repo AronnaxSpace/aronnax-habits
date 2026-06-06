@@ -1,0 +1,50 @@
+<div class="bg-white dark:bg-gray-800 rounded-xl border border-gray-100 dark:border-gray-700 shadow-sm mb-6 overflow-hidden"
+     data-controller="collapsible">
+  <div class="px-4 py-3 bg-gray-50 dark:bg-gray-700/50 flex items-center justify-between gap-3 cursor-pointer select-none"
+       data-action="click->collapsible#toggle">
+    <div>
+      <h2 class="text-sm font-semibold text-gray-900 dark:text-gray-100">Week summary</h2>
+      <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">
+        <%= @habit_week_summaries.count %> active <%= "habit".pluralize(@habit_week_summaries.count) %>
+      </p>
+    </div>
+    <div class="flex items-center gap-3">
+      <div class="text-right">
+        <p class="text-sm font-semibold text-gray-900 dark:text-gray-100">
+          <%= @week_summary_completed_target_count %>/<%= @week_summary_target_count %>
+        </p>
+        <p class="text-xs text-gray-500 dark:text-gray-400">targets met</p>
+      </div>
+      <svg data-collapsible-target="icon"
+           xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-gray-400 dark:text-gray-500 transition-transform duration-200 rotate-180"
+           fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+      </svg>
+    </div>
+  </div>
+
+  <div data-collapsible-target="content" class="border-t border-gray-100 dark:border-gray-700">
+    <% if @habit_week_summaries.empty? %>
+      <p class="text-sm text-gray-400 dark:text-gray-500 py-6 text-center">No active habits this week</p>
+    <% else %>
+      <div class="divide-y divide-gray-100 dark:divide-gray-700">
+        <% @habit_week_summaries.each do |summary| %>
+          <% habit = summary[:habit] %>
+          <div class="px-4 py-3 flex items-center justify-between gap-3">
+            <div class="min-w-0">
+              <p class="text-sm font-medium text-gray-800 dark:text-gray-200 truncate"><%= habit.name %></p>
+              <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">
+                <%= habit.frequency_label %> &middot;
+                <%= pluralize(summary[:completed_count], "completion") %> &middot;
+                target <%= summary[:target_count] %>
+              </p>
+            </div>
+            <span class="shrink-0 text-xs font-medium px-2 py-1 rounded-full <%= summary[:status_class] %>">
+              <%= summary[:status_label] %>
+            </span>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</div>

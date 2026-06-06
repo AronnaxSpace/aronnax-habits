@@ -11,6 +11,13 @@ class DashboardController < ApplicationController
       [ summary[:completed_count], summary[:target_count] ].min
     end
     @week_summary_target_count = @habit_week_summaries.sum { |summary| summary[:target_count] }
+
+    if @is_current
+      @today_day = @week_days.find { |d| d.date == Date.current }
+    else
+      today_week = DashboardWeekBuilder.new(current_user, Date.current.beginning_of_week(:sunday)).call
+      @today_day = today_week.find { |d| d.date == Date.current }
+    end
   end
 
   private

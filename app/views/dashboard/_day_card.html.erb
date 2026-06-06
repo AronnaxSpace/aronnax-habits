@@ -1,0 +1,24 @@
+<% is_today = day.date == Date.current %>
+<div class="bg-white dark:bg-gray-800 rounded-xl border <%= is_today ? "border-indigo-200 dark:border-indigo-800 shadow-sm" : "border-gray-100 dark:border-gray-700" %> overflow-hidden">
+  <div class="px-4 py-3 <%= is_today ? "bg-indigo-50 dark:bg-indigo-900/30" : "bg-gray-50 dark:bg-gray-700/50" %> border-b <%= is_today ? "border-indigo-100 dark:border-indigo-900" : "border-gray-100 dark:border-gray-700" %>">
+    <span class="text-sm font-semibold <%= is_today ? "text-indigo-700" : "text-gray-700 dark:text-gray-300" %>">
+      <%= day.date.strftime("%A") %>
+    </span>
+    <span class="text-sm <%= is_today ? "text-indigo-500" : "text-gray-400 dark:text-gray-500" %> ml-1">
+      <%= day.date.strftime("%b %-d") %>
+    </span>
+    <% if is_today %>
+      <span class="ml-2 text-xs font-medium text-indigo-500 bg-indigo-100 px-2 py-0.5 rounded-full">Today</span>
+    <% end %>
+  </div>
+
+  <div class="p-3 flex flex-col gap-2">
+    <% if day.habits_with_entries.empty? %>
+      <p class="text-sm text-gray-400 dark:text-gray-500 py-2 text-center">No active habits</p>
+    <% else %>
+      <% day.habits_with_entries.each do |hw| %>
+        <%= render "habit_row", hw: hw, date: day.date %>
+      <% end %>
+    <% end %>
+  </div>
+</div>
