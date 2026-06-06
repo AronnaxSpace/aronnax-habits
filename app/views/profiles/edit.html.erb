@@ -1,0 +1,10 @@
+<% content_for :title, t(".title") %>
+
+<div class="mb-6">
+  <h1 class="text-2xl font-bold text-gray-900 dark:text-gray-100"><%= t(".title") %></h1>
+  <%= link_to t(".back"), profile_path, class: "text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 mt-1 inline-block" %>
+</div>
+
+<div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 p-6">
+  <%= render "form", profile: profile %>
+</div>

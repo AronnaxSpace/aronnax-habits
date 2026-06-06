@@ -17,6 +17,7 @@ Rails.application.routes.draw do
 
   root "welcome#index"
 
+  resource :profile, only: %i[show edit update]
   resources :habits do
     resources :habit_entries, path: "entries", as: :entries, only: %i[new create edit update]
   end

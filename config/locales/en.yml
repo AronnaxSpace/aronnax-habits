@@ -34,8 +34,21 @@ en:
       open_menu: "Open menu"
       nav_dashboard: "Dashboard"
       nav_my_habits: "My Habits"
+      nav_profile: "Profile"
       account_settings: "Account settings"
       sign_out: "Sign out"
+
+  profiles:
+    show:
+      title: "My Profile"
+      edit: "Edit profile"
+    edit:
+      title: "Edit Profile"
+      back: "← Back to profile"
+    form:
+      language_label: "Language"
+    update:
+      success: "Profile updated."
 
   habits:
     index:
@@ -131,6 +144,10 @@ en:
 
   activerecord:
     attributes:
+      profile:
+        languages:
+          en: "English"
+          uk: "Ukrainian"
       habit:
         frequencies:
           daily: "Every day"
