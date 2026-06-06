@@ -1,6 +1,6 @@
 <div class="flex items-center justify-between mb-4">
   <div class="flex items-center gap-3">
-    <%= link_to root_path(week: @prev_week), class: "p-2 rounded-lg bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700", aria: { label: "Previous week" } do %>
+    <%= link_to root_path(week: @prev_week), class: "p-2 rounded-lg bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700", aria: { label: t(".previous_week") } do %>
       <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
       </svg>
@@ -8,13 +8,13 @@
     <h2 class="text-sm font-semibold text-gray-700 dark:text-gray-300">
       <%= @curr_week.strftime("%b %-d") %> – <%= (@curr_week + 6.days).strftime("%b %-d, %Y") %>
     </h2>
-    <%= link_to root_path(week: @next_week), class: "p-2 rounded-lg bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700", aria: { label: "Next week" } do %>
+    <%= link_to root_path(week: @next_week), class: "p-2 rounded-lg bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700", aria: { label: t(".next_week") } do %>
       <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
       </svg>
     <% end %>
   </div>
   <% unless @is_current %>
-    <%= link_to "Today", root_path, class: "text-sm text-indigo-600 hover:text-indigo-800 font-medium" %>
+    <%= link_to t(".today"), root_path, class: "text-sm text-indigo-600 hover:text-indigo-800 font-medium" %>
   <% end %>
 </div>

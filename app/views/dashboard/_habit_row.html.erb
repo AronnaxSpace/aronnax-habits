@@ -23,10 +23,10 @@
     </div>
   </div>
   <% if hw.entry %>
-    <%= link_to "Edit", edit_habit_entry_path(hw.habit, hw.entry),
+    <%= link_to t(".edit"), edit_habit_entry_path(hw.habit, hw.entry),
         class: "shrink-0 text-xs text-gray-500 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-400 font-medium" %>
   <% elsif date <= Date.current %>
-    <%= link_to "Log", new_habit_entry_path(hw.habit, date: date),
+    <%= link_to t(".log"), new_habit_entry_path(hw.habit, date: date),
         class: "shrink-0 text-xs font-medium text-white bg-indigo-600 hover:bg-indigo-700 px-2.5 py-1 rounded-md" %>
   <% else %>
     <span class="shrink-0 text-xs text-gray-300 dark:text-gray-600">—</span>

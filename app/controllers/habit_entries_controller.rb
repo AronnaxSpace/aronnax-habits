@@ -10,7 +10,7 @@ class HabitEntriesController < ApplicationController
   def create
     @entry = habit.entries.new(entry_params)
     if entry.save
-      redirect_to root_path(week: week_for(entry)), notice: "Entry saved."
+      redirect_to root_path(week: week_for(entry)), notice: t(".success")
     else
       render :new, status: :unprocessable_content
     end
@@ -21,7 +21,7 @@ class HabitEntriesController < ApplicationController
 
   def update
     if entry.update(entry_params)
-      redirect_to root_path(week: week_for(entry)), notice: "Entry updated."
+      redirect_to root_path(week: week_for(entry)), notice: t(".success")
     else
       render :edit, status: :unprocessable_content
     end

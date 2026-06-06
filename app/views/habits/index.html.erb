@@ -1,8 +1,8 @@
-<% content_for :title, "Habits" %>
+<% content_for :title, t(".title") %>
 
 <div class="flex items-center justify-between mb-6">
-  <h1 class="text-2xl font-bold text-gray-900 dark:text-gray-100">My Habits</h1>
-  <%= link_to "New Habit", new_habit_path, class: "bg-indigo-600 text-white text-sm font-medium px-4 py-2 rounded-lg hover:bg-indigo-700" %>
+  <h1 class="text-2xl font-bold text-gray-900 dark:text-gray-100"><%= t(".title") %></h1>
+  <%= link_to t(".new_habit"), new_habit_path, class: "bg-indigo-600 text-white text-sm font-medium px-4 py-2 rounded-lg hover:bg-indigo-700" %>
 </div>
 
 <% if @habits.any? %>
@@ -13,7 +13,7 @@
   </div>
 <% else %>
   <div class="text-center py-16 text-gray-400 dark:text-gray-500">
-    <p class="text-lg font-medium">No habits yet</p>
-    <p class="text-sm mt-1">Start building your routine by adding your first habit.</p>
+    <p class="text-lg font-medium"><%= t(".no_habits") %></p>
+    <p class="text-sm mt-1"><%= t(".no_habits_description") %></p>
   </div>
 <% end %>

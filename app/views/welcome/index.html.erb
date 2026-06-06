@@ -1,12 +1,12 @@
-<% content_for :title, "Welcome" %>
+<% content_for :title, t(".title") %>
 
 <div class="min-h-screen flex items-center justify-center px-4 -my-8">
   <div class="text-center max-w-md">
-    <h1 class="text-4xl font-bold text-gray-900 dark:text-gray-100 mb-3">Aronnax Habits</h1>
-    <p class="text-lg text-gray-500 dark:text-gray-400 mb-8">Track your habits and build a better you.</p>
+    <h1 class="text-4xl font-bold text-gray-900 dark:text-gray-100 mb-3"><%= t(".app_name") %></h1>
+    <p class="text-lg text-gray-500 dark:text-gray-400 mb-8"><%= t(".tagline") %></p>
     <div class="flex items-center justify-center gap-3">
-      <%= link_to "Get started", new_user_registration_path, class: "bg-indigo-600 text-white text-sm font-medium px-5 py-2.5 rounded-lg hover:bg-indigo-700" %>
-      <%= link_to "Log in", new_user_session_path, class: "bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-600 text-sm font-medium px-5 py-2.5 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700" %>
+      <%= link_to t(".get_started"), new_user_registration_path, class: "bg-indigo-600 text-white text-sm font-medium px-5 py-2.5 rounded-lg hover:bg-indigo-700" %>
+      <%= link_to t(".log_in"), new_user_session_path, class: "bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-600 text-sm font-medium px-5 py-2.5 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700" %>
     </div>
   </div>
 </div>

@@ -28,6 +28,107 @@
 #       enabled: "ON"
 
 en:
+  layouts:
+    application:
+      app_name: "Aronnax Habits"
+      open_menu: "Open menu"
+      nav_dashboard: "Dashboard"
+      nav_my_habits: "My Habits"
+      account_settings: "Account settings"
+      sign_out: "Sign out"
+
+  habits:
+    index:
+      title: "My Habits"
+      new_habit: "New Habit"
+      no_habits: "No habits yet"
+      no_habits_description: "Start building your routine by adding your first habit."
+    new:
+      title: "New Habit"
+      back: "← Back to habits"
+    edit:
+      title: "Edit Habit"
+      view_habit: "View habit"
+      back: "Back to habits"
+    show:
+      edit: "Edit"
+      delete: "Delete"
+      back: "Back to habits"
+      confirm_delete: "Delete this habit?"
+    habit:
+      view: "View"
+      edit: "Edit"
+    form:
+      optional: "optional"
+    create:
+      success: "Habit was successfully created."
+    update:
+      success: "Habit was successfully updated."
+    destroy:
+      success: "Habit was successfully destroyed."
+
+  habit_entries:
+    new:
+      title: "Log entry"
+    edit:
+      title: "Edit entry"
+    create:
+      success: "Entry saved."
+    update:
+      success: "Entry updated."
+    form:
+      completed_label: "Completed?"
+      "yes": "Yes"
+      "no": "No"
+      optional: "optional"
+      back_to_dashboard: "Back to dashboard"
+
+  dashboard:
+    today_card:
+      title: "Today"
+      no_habits: "No active habits today"
+    week_summary:
+      title: "Week summary"
+      active_habits:
+        one: "1 active habit"
+        other: "%{count} active habits"
+      targets_met: "targets met"
+      no_habits: "No active habits this week"
+      completions:
+        one: "1 completion"
+        other: "%{count} completions"
+      target: "target %{count}"
+    day_card:
+      today_badge: "Today"
+      no_habits: "No active habits"
+    habit_row:
+      edit: "Edit"
+      log: "Log"
+    week_nav:
+      today: "Today"
+      previous_week: "Previous week"
+      next_week: "Next week"
+
+  welcome:
+    index:
+      title: "Aronnax Habits"
+      app_name: "Aronnax Habits"
+      tagline: "Track your habits and build a better you."
+      get_started: "Get started"
+      log_in: "Log in"
+
+  shared:
+    errors:
+      error_count:
+        one: "1 error prevented this %{resource} from being saved:"
+        other: "%{count} errors prevented this %{resource} from being saved:"
+
+  helpers:
+    submit:
+      habit_entry:
+        create: "Record Entry"
+        update: "Save"
+
   activerecord:
     attributes:
       habit:
@@ -36,8 +137,3 @@ en:
           weekly: "Once a week"
           twice_a_week: "Twice a week"
           thrice_a_week: "Three times a week"
-  helpers:
-    submit:
-      habit_entry:
-        create: "Record Entry"
-        update: "Save"

@@ -8,13 +8,13 @@
       <%= day.date.strftime("%b %-d") %>
     </span>
     <% if is_today %>
-      <span class="ml-2 text-xs font-medium text-indigo-500 bg-indigo-100 px-2 py-0.5 rounded-full">Today</span>
+      <span class="ml-2 text-xs font-medium text-indigo-500 bg-indigo-100 px-2 py-0.5 rounded-full"><%= t(".today_badge") %></span>
     <% end %>
   </div>
 
   <div class="p-3 flex flex-col gap-2">
     <% if day.habits_with_entries.empty? %>
-      <p class="text-sm text-gray-400 dark:text-gray-500 py-2 text-center">No active habits</p>
+      <p class="text-sm text-gray-400 dark:text-gray-500 py-2 text-center"><%= t(".no_habits") %></p>
     <% else %>
       <% day.habits_with_entries.each do |hw| %>
         <%= render "habit_row", hw: hw, date: day.date %>

@@ -20,7 +20,7 @@ class HabitsController < ApplicationController
 
     respond_to do |format|
       if habit.save
-        format.html { redirect_to habit, notice: "Habit was successfully created." }
+        format.html { redirect_to habit, notice: t(".success") }
       else
         format.html { render :new, status: :unprocessable_content }
       end
@@ -30,7 +30,7 @@ class HabitsController < ApplicationController
   def update
     respond_to do |format|
       if habit.update(habit_params)
-        format.html { redirect_to habit, notice: "Habit was successfully updated.", status: :see_other }
+        format.html { redirect_to habit, notice: t(".success"), status: :see_other }
       else
         format.html { render :edit, status: :unprocessable_content }
       end
@@ -41,7 +41,7 @@ class HabitsController < ApplicationController
     habit.destroy!
 
     respond_to do |format|
-      format.html { redirect_to habits_path, notice: "Habit was successfully destroyed.", status: :see_other }
+      format.html { redirect_to habits_path, notice: t(".success"), status: :see_other }
     end
   end
 
