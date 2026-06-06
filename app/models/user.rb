@@ -14,6 +14,7 @@ class User < ApplicationRecord
   private
 
   def add_profile
-    create_profile(nickname: UniqueNicknameGenerator.generate(email.split("@").first))
+    language = Profile.languages.key?(Current.locale.to_s) ? Current.locale.to_s : "en"
+    create_profile(nickname: UniqueNicknameGenerator.generate(email.split("@").first), language: language)
   end
 end

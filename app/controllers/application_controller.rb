@@ -14,6 +14,7 @@ class ApplicationController < ActionController::Base
       cookies[:locale]&.to_sym || I18n.default_locale
     end
     locale = I18n.default_locale unless I18n.available_locales.include?(locale)
+    Current.locale = locale.to_s
     I18n.with_locale(locale, &action)
   end
 end
