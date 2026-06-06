@@ -1,23 +1,23 @@
-<% content_for :title, @habit.name %>
+<% content_for :title, habit.name %>
 
 <div class="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 p-6">
-  <h1 class="text-2xl font-bold text-gray-900 dark:text-gray-100"><%= @habit.name %></h1>
-  <% if @habit.description.present? %>
-    <p class="mt-3 text-gray-600 dark:text-gray-400"><%= @habit.description %></p>
+  <h1 class="text-2xl font-bold text-gray-900 dark:text-gray-100"><%= habit.name %></h1>
+  <% if habit.description.present? %>
+    <p class="mt-3 text-gray-600 dark:text-gray-400"><%= habit.description %></p>
   <% end %>
 
   <div class="mt-4 flex flex-wrap items-center gap-4 text-sm text-gray-500 dark:text-gray-400">
-    <span class="font-medium text-gray-700 dark:text-gray-300"><%= @habit.frequency_label %></span>
-    <span><%= @habit.start_date.strftime("%b %-d, %Y") %></span>
-    <% if @habit.end_date.present? %>
+    <span class="font-medium text-gray-700 dark:text-gray-300"><%= habit.frequency_label %></span>
+    <span><%= habit.start_date.strftime("%b %-d, %Y") %></span>
+    <% if habit.end_date.present? %>
       <span>→</span>
-      <span><%= @habit.end_date.strftime("%b %-d, %Y") %></span>
+      <span><%= habit.end_date.strftime("%b %-d, %Y") %></span>
     <% end %>
   </div>
 
   <div class="mt-6 pt-4 border-t border-gray-100 dark:border-gray-700 flex items-center gap-3">
-    <%= link_to "Edit", edit_habit_path(@habit), class: "bg-white dark:bg-gray-700 text-indigo-600 border border-indigo-200 dark:border-indigo-800 text-sm font-medium px-4 py-2 rounded-lg hover:bg-indigo-50 dark:hover:bg-indigo-900/30" %>
-    <%= button_to "Delete", @habit, method: :delete, class: "bg-white dark:bg-gray-700 text-red-600 border border-red-200 dark:border-red-900 text-sm font-medium px-4 py-2 rounded-lg hover:bg-red-50 dark:hover:bg-red-900/20 cursor-pointer", data: { turbo_confirm: "Delete this habit?" } %>
+    <%= link_to "Edit", edit_habit_path(habit), class: "bg-white dark:bg-gray-700 text-indigo-600 border border-indigo-200 dark:border-indigo-800 text-sm font-medium px-4 py-2 rounded-lg hover:bg-indigo-50 dark:hover:bg-indigo-900/30" %>
+    <%= button_to "Delete", habit, method: :delete, class: "bg-white dark:bg-gray-700 text-red-600 border border-red-200 dark:border-red-900 text-sm font-medium px-4 py-2 rounded-lg hover:bg-red-50 dark:hover:bg-red-900/20 cursor-pointer", data: { turbo_confirm: "Delete this habit?" } %>
     <%= link_to "Back to habits", habits_path, class: "ml-auto text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300" %>
   </div>
 </div>

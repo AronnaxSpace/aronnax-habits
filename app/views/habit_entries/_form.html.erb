@@ -1,4 +1,4 @@
-<% url = entry.new_record? ? habit_entries_path(@habit) : habit_entry_path(@habit, entry) %>
+<% url = entry.new_record? ? habit_entries_path(habit) : habit_entry_path(habit, entry) %>
 <%= form_with(model: entry, url: url) do |form| %>
   <% if entry.errors.any? %>
     <div class="mb-5 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg px-4 py-3">
