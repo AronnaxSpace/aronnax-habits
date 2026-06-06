@@ -9,7 +9,7 @@ class Habit < ApplicationRecord
 
   # associations
   belongs_to :user
-  has_many :entries, class_name: "HabitEntry"
+  has_many :entries, class_name: "HabitEntry", dependent: :destroy
 
   # validations
   validates :name, presence: true
