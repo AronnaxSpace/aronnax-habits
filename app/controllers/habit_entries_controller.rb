@@ -4,7 +4,7 @@ class HabitEntriesController < ApplicationController
   helper_method :entry
 
   def new
-    @entry = habit.entries.new(date: params[:date])
+    @entry = habit.entries.new(date: params[:date], completed: true)
   end
 
   def create

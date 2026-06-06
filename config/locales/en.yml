@@ -36,3 +36,8 @@ en:
           weekly: "Once a week"
           twice_a_week: "Twice a week"
           thrice_a_week: "Three times a week"
+  helpers:
+    submit:
+      habit_entry:
+        create: "Record Entry"
+        update: "Save"
