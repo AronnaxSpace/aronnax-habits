@@ -1,5 +1,5 @@
 <div class="max-w-md mx-auto bg-white dark:bg-gray-800 rounded-2xl shadow-md p-8">
-  <h2 class="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-6">Resend unlock instructions</h2>
+  <h2 class="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-6"><%= t(".title") %></h2>
 
   <%= form_for(resource, as: resource_name, url: unlock_path(resource_name), html: { method: :post }) do |f| %>
     <%= render "devise/shared/error_messages", resource: resource %>
@@ -10,7 +10,7 @@
     </div>
 
     <div>
-      <%= f.submit "Resend unlock instructions", class: "w-full bg-indigo-600 text-white text-sm font-medium px-5 py-2 rounded-lg hover:bg-indigo-700 cursor-pointer" %>
+      <%= f.submit t(".submit"), class: "w-full bg-indigo-600 text-white text-sm font-medium px-5 py-2 rounded-lg hover:bg-indigo-700 cursor-pointer" %>
     </div>
   <% end %>
 

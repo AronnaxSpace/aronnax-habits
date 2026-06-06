@@ -6,7 +6,7 @@
       </svg>
     <% end %>
     <h2 class="text-sm font-semibold text-gray-700 dark:text-gray-300">
-      <%= @curr_week.strftime("%b %-d") %> – <%= (@curr_week + 6.days).strftime("%b %-d, %Y") %>
+      <%= l(@curr_week, format: :dashboard_short) %> – <%= l(@curr_week + 6.days, format: :dashboard_long) %>
     </h2>
     <%= link_to root_path(week: @next_week), class: "p-2 rounded-lg bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-700", aria: { label: t(".next_week") } do %>
       <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">

@@ -30,17 +30,7 @@
 
   <div class="px-4 py-4 border-t border-gray-100 dark:border-gray-700 space-y-3">
     <div class="flex">
-      <div class="flex rounded-lg border border-gray-200 dark:border-gray-600 bg-gray-100 dark:bg-gray-700/60 p-0.5 gap-0.5">
-        <button data-action="click->theme#setLight"
-                data-theme-target="lightBtn"
-                class="px-2 py-1 rounded-md text-xs transition-colors text-gray-500" title="Light">☀</button>
-        <button data-action="click->theme#setSystem"
-                data-theme-target="systemBtn"
-                class="px-2 py-1 rounded-md text-xs transition-colors text-gray-500" title="System">⊙</button>
-        <button data-action="click->theme#setDark"
-                data-theme-target="darkBtn"
-                class="px-2 py-1 rounded-md text-xs transition-colors text-gray-500" title="Dark">☽</button>
-      </div>
+      <%= render "shared/theme_switch" %>
     </div>
     <p class="text-xs text-gray-400 dark:text-gray-500 truncate"><%= current_user.email %></p>
     <%= link_to t(".account_settings"), edit_user_registration_path,

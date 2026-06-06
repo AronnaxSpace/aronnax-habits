@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   # get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
 
   devise_for :users
+  patch "locale", to: "locales#update", as: :locale
 
   authenticated :user do
     root to: "dashboard#index", as: :authenticated_root

@@ -1,0 +1,214 @@
+uk:
+  app_name: "Aronnax Habits"
+
+  date:
+    formats:
+      dashboard_full: "%A, %-d %b"
+      dashboard_day: "%A"
+      dashboard_short: "%-d %b"
+      dashboard_long: "%-d %b %Y"
+
+  layouts:
+    application:
+      open_menu: "Відкрити меню"
+    partials:
+      sidebar:
+        dashboard: "Панель"
+        my_habits: "Мої звички"
+        profile: "Профіль"
+        account_settings: "Налаштування акаунту"
+        sign_out: "Вийти"
+
+  profiles:
+    show:
+      title: "Мій профіль"
+      edit: "Редагувати профіль"
+    edit:
+      title: "Редагувати профіль"
+      back: "← Назад до профілю"
+    form:
+      language_label: "Мова"
+    update:
+      success: "Профіль оновлено."
+
+  habits:
+    index:
+      title: "Мої звички"
+      new_habit: "Нова звичка"
+      no_habits: "Ще немає звичок"
+      no_habits_description: "Почніть будувати свій розпорядок, додавши першу звичку."
+    new:
+      title: "Нова звичка"
+      back: "← Назад до звичок"
+    edit:
+      title: "Редагувати звичку"
+      view_habit: "Переглянути звичку"
+      back: "Назад до звичок"
+    show:
+      edit: "Редагувати"
+      delete: "Видалити"
+      back: "Назад до звичок"
+      confirm_delete: "Видалити цю звичку?"
+    habit:
+      view: "Переглянути"
+      edit: "Редагувати"
+    form:
+      optional: "необов'язково"
+    create:
+      success: "Звичку успішно створено."
+    update:
+      success: "Звичку успішно оновлено."
+    destroy:
+      success: "Звичку успішно видалено."
+
+  habit_entries:
+    new:
+      title: "Записати результат"
+    edit:
+      title: "Редагувати запис"
+    create:
+      success: "Запис збережено."
+    update:
+      success: "Запис оновлено."
+    form:
+      completed_label: "Виконано?"
+      "yes": "Так"
+      "no": "Ні"
+      optional: "необов'язково"
+      back_to_dashboard: "Назад до панелі"
+
+  dashboard:
+    today_card:
+      title: "Сьогодні"
+      no_habits: "Немає активних звичок сьогодні"
+    week_summary:
+      title: "Підсумок тижня"
+      active_habits:
+        one: "1 активна звичка"
+        other: "%{count} активних звичок"
+      targets_met: "цілей досягнуто"
+      no_habits: "Немає активних звичок цього тижня"
+      completions:
+        one: "1 виконання"
+        other: "%{count} виконань"
+      target: "ціль %{count}"
+    day_card:
+      today_badge: "Сьогодні"
+      no_habits: "Немає активних звичок"
+    habit_row:
+      edit: "Редагувати"
+      log: "Записати"
+    week_nav:
+      today: "Сьогодні"
+      previous_week: "Попередній тиждень"
+      next_week: "Наступний тиждень"
+
+  welcome:
+    index:
+      title: "Aronnax Habits"
+      tagline: "Відстежуйте звички та ставайте краще щодня."
+      get_started: "Розпочати"
+      log_in: "Увійти"
+
+  shared:
+    errors:
+      error_count:
+        one: "1 помилка не дозволила зберегти %{resource}:"
+        other: "%{count} помилок не дозволили зберегти %{resource}:"
+
+  helpers:
+    submit:
+      habit_entry:
+        create: "Записати результат"
+        update: "Зберегти"
+
+  devise:
+    confirmations:
+      new:
+        title: "Надіслати інструкції з підтвердження повторно"
+        submit: "Надіслати інструкції з підтвердження повторно"
+    sessions:
+      new:
+        title: "Увійти"
+        submit: "Увійти"
+    passwords:
+      new:
+        title: "Забули пароль?"
+        description: "Введіть свою електронну адресу, і ми надішлемо інструкції для скидання пароля."
+        submit: "Надіслати інструкції"
+      edit:
+        title: "Встановити новий пароль"
+        new_password: "Новий пароль"
+        confirm_new_password: "Підтвердіть новий пароль"
+        characters_minimum: "мінімум %{count} символів"
+        submit: "Змінити пароль"
+    registrations:
+      new:
+        title: "Реєстрація"
+        characters_minimum: "мінімум %{count} символів"
+        submit: "Зареєструватися"
+      edit:
+        title: "Налаштування акаунту"
+        pending_reconfirmation: "Очікується підтвердження для: %{email}"
+        leave_blank_password: "залиште порожнім, щоб не змінювати пароль"
+        characters_minimum: "мінімум %{count} символів"
+        current_password_hint: "потрібен для підтвердження змін"
+        submit: "Оновити акаунт"
+        danger_zone: "Небезпечна зона"
+        delete_description: "Остаточно видалити акаунт разом із усіма звичками."
+        delete_account: "Видалити акаунт"
+        delete_confirm: "Ви впевнені? Цю дію неможливо скасувати."
+    unlocks:
+      new:
+        title: "Надіслати інструкції з розблокування повторно"
+        submit: "Надіслати інструкції з розблокування повторно"
+    shared:
+      links:
+        log_in: "Увійти"
+        sign_up: "Зареєструватися"
+        forgot_password: "Забули пароль?"
+        no_confirmation: "Не отримали інструкції з підтвердження?"
+        no_unlock: "Не отримали інструкції з розблокування?"
+        sign_in_with: "Увійти через %{provider}"
+    mailer:
+      confirmation_instructions:
+        welcome: "Ласкаво просимо, %{email}!"
+        instructions: "Підтвердіть свою електронну адресу за посиланням нижче:"
+        action: "Підтвердити акаунт"
+      email_changed:
+        hello: "Привіт, %{email}!"
+        changing_to: "Повідомляємо, що ваша електронна адреса змінюється на %{email}."
+        changed_to: "Повідомляємо, що вашу електронну адресу змінено на %{email}."
+      password_change:
+        hello: "Привіт, %{email}!"
+        body: "Повідомляємо, що ваш пароль було змінено."
+      reset_password_instructions:
+        hello: "Привіт, %{email}!"
+        body: "Надійшов запит на зміну пароля. Ви можете зробити це за посиланням нижче."
+        action: "Змінити пароль"
+        ignore: "Якщо ви не надсилали цей запит, просто ігноруйте цей лист."
+        no_change: "Ваш пароль не зміниться, доки ви не перейдете за посиланням вище та не створите новий."
+      unlock_instructions:
+        hello: "Привіт, %{email}!"
+        locked: "Ваш акаунт заблоковано через надто велику кількість невдалих спроб входу."
+        instructions: "Перейдіть за посиланням нижче, щоб розблокувати акаунт:"
+        action: "Розблокувати акаунт"
+
+  activerecord:
+    attributes:
+      user:
+        email: "Email"
+        password: "Пароль"
+        password_confirmation: "Підтвердження пароля"
+        current_password: "Поточний пароль"
+        remember_me: "Запам'ятати мене"
+      profile:
+        languages:
+          en: "Англійська"
+          uk: "Українська"
+      habit:
+        frequencies:
+          daily: "Щодня"
+          weekly: "Раз на тиждень"
+          twice_a_week: "Двічі на тиждень"
+          thrice_a_week: "Тричі на тиждень"
