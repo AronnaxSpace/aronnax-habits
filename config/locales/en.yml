@@ -28,15 +28,18 @@
 #       enabled: "ON"
 
 en:
+  app_name: "Aronnax Habits"
+
   layouts:
     application:
-      app_name: "Aronnax Habits"
       open_menu: "Open menu"
-      nav_dashboard: "Dashboard"
-      nav_my_habits: "My Habits"
-      nav_profile: "Profile"
-      account_settings: "Account settings"
-      sign_out: "Sign out"
+    partials:
+      sidebar:
+        dashboard: "Dashboard"
+        my_habits: "My Habits"
+        profile: "Profile"
+        account_settings: "Account settings"
+        sign_out: "Sign out"
 
   profiles:
     show:
@@ -125,7 +128,6 @@ en:
   welcome:
     index:
       title: "Aronnax Habits"
-      app_name: "Aronnax Habits"
       tagline: "Track your habits and build a better you."
       get_started: "Get started"
       log_in: "Log in"
