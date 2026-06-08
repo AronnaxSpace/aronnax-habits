@@ -1,11 +1,11 @@
 class DashboardController < ApplicationController
   def index
-    week_start  = parse_week_param || Date.current.beginning_of_week(:sunday)
+    week_start  = parse_week_param || Date.current.beginning_of_week(week_start_day)
     @week_days  = DashboardWeekBuilder.new(current_user, week_start).call
     @prev_week  = week_start - 7.days
     @next_week  = week_start + 7.days
     @curr_week  = week_start
-    @is_current = week_start == Date.current.beginning_of_week(:sunday)
+    @is_current = week_start == Date.current.beginning_of_week(week_start_day)
     @habit_week_summaries = build_habit_week_summaries
     @week_summary_completed_target_count = @habit_week_summaries.sum do |summary|
       [ summary[:completed_count], summary[:target_count] ].min
@@ -15,7 +15,7 @@ class DashboardController < ApplicationController
     if @is_current
       @today_day = @week_days.find { |d| d.date == Date.current }
     else
-      today_week = DashboardWeekBuilder.new(current_user, Date.current.beginning_of_week(:sunday)).call
+      today_week = DashboardWeekBuilder.new(current_user, Date.current.beginning_of_week(week_start_day)).call
       @today_day = today_week.find { |d| d.date == Date.current }
     end
   end
@@ -66,6 +66,8 @@ class DashboardController < ApplicationController
 
     "bg-amber-100 text-amber-700"
   end
+
+  def week_start_day = current_user.profile.week_starts_on.to_sym
 
   def parse_week_param
     Date.parse(params[:week]) if params[:week].present?

@@ -20,5 +20,5 @@ class ProfilesController < ApplicationController
   private
 
   def profile = @profile ||= current_user.profile
-  def profile_params = params.expect(profile: [ :nickname, :language ])
+  def profile_params = params.expect(profile: [ :nickname, :language, :week_starts_on ])
 end

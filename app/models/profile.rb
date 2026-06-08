@@ -1,5 +1,6 @@
 class Profile < ApplicationRecord
   enum :language, en: 0, uk: 1
+  enum :week_starts_on, sunday: 0, monday: 1
 
   # associations
   belongs_to :user

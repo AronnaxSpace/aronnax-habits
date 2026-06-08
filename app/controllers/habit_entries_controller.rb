@@ -31,5 +31,5 @@ class HabitEntriesController < ApplicationController
 
   def entry = @entry ||= habit.entries.find(params[:id])
   def entry_params = params.expect(habit_entry: [ :completed, :note, :date ])
-  def week_for(entry) = entry.date.beginning_of_week(:sunday)
+  def week_for(entry) = entry.date.beginning_of_week(current_user.profile.week_starts_on.to_sym)
 end

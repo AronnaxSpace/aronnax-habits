@@ -229,6 +229,10 @@ en:
         languages:
           en: "English"
           uk: "Ukrainian"
+        week_starts_ons:
+          sunday: "Sunday"
+          monday: "Monday"
+        week_starts_on: "Week starts on"
       habit:
         frequencies:
           daily: "Every day"

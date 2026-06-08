@@ -106,7 +106,7 @@ uk:
   welcome:
     index:
       title: "Aronnax Habits"
-      tagline: "Відстежуйте звички та ставайте краще щодня."
+      tagline: "Відстежуйте звички та ставайте кращими щодня."
       get_started: "Розпочати"
       log_in: "Увійти"
 
@@ -206,6 +206,10 @@ uk:
         languages:
           en: "Англійська"
           uk: "Українська"
+        week_starts_ons:
+          sunday: "Неділя"
+          monday: "Понеділок"
+        week_starts_on: "Тиждень починається з"
       habit:
         frequencies:
           daily: "Щодня"
