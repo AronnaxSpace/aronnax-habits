@@ -36,6 +36,8 @@ en:
       dashboard_day: "%A"
       dashboard_short: "%b %-d"
       dashboard_long: "%b %-d, %Y"
+      dashboard_abbr_day: "%a"
+      dashboard_abbr_date: "%-d"
 
   layouts:
     application:
@@ -110,6 +112,11 @@ en:
     today_card:
       title: "Today"
       no_habits: "No active habits today"
+      progress: "%{completed} / %{total}"
+    week_grid:
+      habit: "Habit"
+      log_entry: "Log entry"
+      edit_entry: "Edit entry"
     week_summary:
       title: "Week summary"
       active_habits:
@@ -126,7 +133,8 @@ en:
       no_habits: "No active habits"
     habit_row:
       edit: "Edit"
-      log: "Log"
+      log: "Done"
+      details: "Details"
     week_nav:
       today: "Today"
       previous_week: "Previous week"
