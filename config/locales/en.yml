@@ -133,7 +133,8 @@ en:
       no_habits: "No active habits"
     habit_row:
       edit: "Edit"
-      log: "Log"
+      log: "Done"
+      details: "Details"
     week_nav:
       today: "Today"
       previous_week: "Previous week"

@@ -104,7 +104,8 @@ uk:
       no_habits: "Немає активних звичок"
     habit_row:
       edit: "Редагувати"
-      log: "Записати"
+      log: "Виконано"
+      details: "Деталі"
     week_nav:
       today: "Сьогодні"
       previous_week: "Попередній тиждень"

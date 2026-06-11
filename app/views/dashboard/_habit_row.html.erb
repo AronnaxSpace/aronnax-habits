@@ -4,7 +4,7 @@
       <% if hw.entry %>
         <% if hw.entry.completed? %>
           <%= button_to toggle_completion_habit_entry_path(hw.habit, hw.entry), method: :patch,
-              class: "shrink-0 w-5 h-5 rounded-full bg-green-100 flex items-center justify-center hover:bg-green-200 dark:bg-green-900/30 dark:hover:bg-green-900/50 transition-colors cursor-pointer" do %>
+              class: "shrink-0 w-5 h-5 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center hover:bg-green-200 dark:hover:bg-green-900/50 transition-colors cursor-pointer" do %>
             <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 text-green-600 dark:text-green-400" viewBox="0 0 20 20" fill="currentColor">
               <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
             </svg>
@@ -25,16 +25,21 @@
         <% end %>
       </div>
     </div>
-    <% if hw.entry %>
-      <%= link_to t(".edit"), edit_habit_entry_path(hw.habit, hw.entry),
-          class: "shrink-0 text-xs text-gray-500 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-400 font-medium",
-          data: { turbo_frame: "_top" } %>
-    <% elsif date <= Date.current %>
-      <%= button_to t(".log"), habit_entries_path(hw.habit), method: :post,
-          params: { habit_entry: { date: date, completed: true } },
-          class: "shrink-0 text-xs font-medium text-white bg-indigo-600 hover:bg-indigo-700 px-2.5 py-1 rounded-md cursor-pointer" %>
-    <% else %>
-      <span class="shrink-0 text-xs text-gray-300 dark:text-gray-600">—</span>
-    <% end %>
+    <div class="flex items-center gap-1.5 shrink-0">
+      <% if hw.entry %>
+        <%= link_to t(".edit"), edit_habit_entry_path(hw.habit, hw.entry),
+            class: "text-xs text-gray-500 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-400 font-medium",
+            data: { turbo_frame: "_top" } %>
+      <% elsif date <= Date.current %>
+        <%= button_to t(".log"), habit_entries_path(hw.habit), method: :post,
+            params: { habit_entry: { date: date, completed: true } },
+            class: "text-xs font-medium text-white bg-indigo-600 hover:bg-indigo-700 px-2.5 py-1 rounded-md cursor-pointer" %>
+        <%= link_to t(".details"), new_habit_entry_path(hw.habit, date: date),
+            class: "text-xs text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300",
+            data: { turbo_frame: "_top" } %>
+      <% else %>
+        <span class="text-xs text-gray-300 dark:text-gray-600">—</span>
+      <% end %>
+    </div>
   </div>
 <% end %>
