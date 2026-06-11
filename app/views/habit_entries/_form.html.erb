@@ -1,5 +1,5 @@
 <% url = entry.new_record? ? habit_entries_path(habit) : habit_entry_path(habit, entry) %>
-<%= form_with(model: entry, url: url) do |form| %>
+<%= form_with(model: entry, url: url, data: { turbo: false }) do |form| %>
   <%= render "shared/errors", resource: entry %>
 
   <%= form.hidden_field :date %>
