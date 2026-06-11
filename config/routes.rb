@@ -20,6 +20,10 @@ Rails.application.routes.draw do
 
   resource :profile, only: %i[show edit update]
   resources :habits do
-    resources :habit_entries, path: "entries", as: :entries, only: %i[new create edit update]
+    resources :habit_entries, path: "entries", as: :entries, only: %i[new create edit update] do
+      member do
+        patch :toggle_completion
+      end
+    end
   end
 end

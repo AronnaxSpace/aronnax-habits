@@ -7,6 +7,8 @@ uk:
       dashboard_day: "%A"
       dashboard_short: "%-d %b"
       dashboard_long: "%-d %b %Y"
+      dashboard_abbr_day: "%a"
+      dashboard_abbr_date: "%-d"
 
   layouts:
     application:
@@ -81,6 +83,11 @@ uk:
     today_card:
       title: "Сьогодні"
       no_habits: "Немає активних звичок сьогодні"
+      progress: "%{completed} / %{total}"
+    week_grid:
+      habit: "Звичка"
+      log_entry: "Записати результат"
+      edit_entry: "Редагувати запис"
     week_summary:
       title: "Підсумок тижня"
       active_habits:

@@ -10,9 +10,20 @@ class HabitEntriesController < ApplicationController
   def create
     @entry = habit.entries.new(entry_params)
     if entry.save
-      redirect_to root_path(week: week_for(entry)), notice: t(".success")
+      respond_to do |format|
+        format.turbo_stream
+        format.html { redirect_to root_path(week: week_for(entry)), notice: t(".success") }
+      end
     else
       render :new, status: :unprocessable_content
+    end
+  end
+
+  def toggle_completion
+    entry.update!(completed: !entry.completed)
+    respond_to do |format|
+      format.turbo_stream
+      format.html { redirect_to root_path(week: week_for(entry)) }
     end
   end
 

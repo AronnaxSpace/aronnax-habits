@@ -1,0 +1,5 @@
+<%= turbo_stream.replace "habit_row_#{entry.habit_id}" do %>
+  <%= render "dashboard/habit_row",
+      hw: DashboardWeekBuilder::HabitWithEntry.new(habit: habit, entry: entry),
+      date: entry.date %>
+<% end %>

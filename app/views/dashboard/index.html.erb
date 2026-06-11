@@ -1,9 +1,6 @@
 <% content_for :title, "Dashboard" %>
 
 <%= render "today_card" %>
-<%= render "week_summary" %>
 <%= render "week_nav" %>
-
-<div class="flex flex-col gap-4">
-  <%= render partial: "day_card", collection: @week_days, as: :day %>
-</div>
+<%= render "week_summary" %>
+<%= render "week_grid" %>
