@@ -9,7 +9,8 @@ Rails.application.routes.draw do
   # get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
   # get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
 
-  devise_for :users
+  devise_for :users,
+    controllers: { omniauth_callbacks: "users/omniauth_callbacks" }
   patch "locale", to: "locales#update", as: :locale
 
   authenticated :user do
