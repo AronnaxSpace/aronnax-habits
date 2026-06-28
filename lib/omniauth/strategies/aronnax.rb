@@ -12,7 +12,7 @@ module OmniAuth
       info { { email: raw_info["email"] } }
 
       def raw_info
-        @raw_info ||= access_token.get("/api/v1/me").parsed
+        @raw_info ||= access_token.get("/api/v1/me.json").parsed
       end
     end
   end

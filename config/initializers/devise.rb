@@ -277,6 +277,7 @@ Devise.setup do |config|
   config.omniauth :aronnax,
     Rails.application.credentials.dig(:aronnax, :app_id),
     Rails.application.credentials.dig(:aronnax, :app_secret),
+    scope: "read",
     client_options: { site: Rails.application.credentials.dig(:aronnax, :site) }
 
   # ==> Warden configuration
