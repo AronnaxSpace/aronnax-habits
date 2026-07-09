@@ -38,4 +38,21 @@ describe "/profile", type: :request do
       end
     end
   end
+
+  describe "DELETE /destroy" do
+    it "deletes the current user" do
+      expect { delete profile_url }.to change(User, :count).by(-1)
+    end
+
+    it "redirects to the root path" do
+      delete profile_url
+      expect(response).to redirect_to(root_path)
+    end
+
+    it "signs the user out" do
+      delete profile_url
+      get habits_url
+      expect(response).to redirect_to(new_user_session_path)
+    end
+  end
 end

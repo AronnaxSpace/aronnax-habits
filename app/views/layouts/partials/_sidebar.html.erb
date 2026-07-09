@@ -40,9 +40,6 @@
       <%= render "shared/theme_switch" %>
     </div>
     <p class="text-xs text-gray-400 dark:text-gray-500 truncate"><%= current_user.email %></p>
-    <%= link_to t(".account_settings"), edit_user_registration_path,
-        data: { action: "click->drawer#close" },
-        class: "block text-sm text-gray-600 dark:text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-400" %>
     <%= button_to t(".sign_out"), destroy_user_session_path, method: :delete,
         class: "text-sm text-gray-600 dark:text-gray-400 hover:text-red-600 dark:hover:text-red-400 cursor-pointer bg-transparent border-none p-0 w-full text-left" %>
   </div>

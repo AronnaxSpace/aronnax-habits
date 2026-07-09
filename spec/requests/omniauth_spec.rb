@@ -42,10 +42,10 @@ describe "Aronnax OmniAuth", type: :request do
   context "when the profile is invalid (missing email)" do
     before { mock_aronnax_auth(info: { email: nil }) }
 
-    it "redirects to registration with an alert instead of raising" do
+    it "redirects to sign in with an alert instead of raising" do
       authenticate_with_aronnax
 
-      expect(response).to redirect_to(new_user_registration_url)
+      expect(response).to redirect_to(new_user_session_url)
       expect(flash[:alert]).to be_present
     end
   end

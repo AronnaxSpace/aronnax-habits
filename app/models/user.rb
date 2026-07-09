@@ -1,13 +1,18 @@
 class User < ApplicationRecord
-  # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
-  devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable,
+  # :database_authenticatable is kept only to preserve Devise's sessions
+  # routes/controller (new_user_session, etc.) which Devise::FailureApp
+  # hardcodes as its redirect target for every unauthenticated request.
+  # No password is ever set, so it can never actually authenticate anyone —
+  # Aronnax SSO (:omniauthable) is the only working sign-in path.
+  devise :database_authenticatable, :rememberable,
          :omniauthable, omniauth_providers: [ :aronnax ]
 
   # associations
   has_one :profile, dependent: :destroy
   has_many :habits, dependent: :destroy
+
+  # validations
+  validates :email, presence: true, uniqueness: { case_sensitive: false }
 
   # callbacks
   after_create :add_profile
@@ -27,8 +32,7 @@ class User < ApplicationRecord
       find_by(email: auth.info.email)&.tap { |u|
         u.update!(provider: auth.provider, uid: auth.uid, **token_attrs)
       } ||
-      create!(provider: auth.provider, uid: auth.uid, email: auth.info.email,
-              password: Devise.friendly_token[0, 20], **token_attrs)
+      create!(provider: auth.provider, uid: auth.uid, email: auth.info.email, **token_attrs)
   end
 
   # Memoized OAuth2 client for calling Aronnax APIs on a user's behalf.

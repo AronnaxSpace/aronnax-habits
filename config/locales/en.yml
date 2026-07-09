@@ -47,7 +47,6 @@ en:
         dashboard: "Dashboard"
         my_habits: "My Habits"
         profile: "Profile"
-        account_settings: "Account settings"
         sign_out: "Sign out"
 
   profiles:
@@ -57,10 +56,16 @@ en:
     edit:
       title: "Edit Profile"
       back: "← Back to profile"
+      danger_zone: "Danger zone"
+      delete_description: "Permanently delete your account and all of your habits."
+      delete_account: "Delete my account"
+      delete_confirm: "Are you sure? This cannot be undone."
     form:
       language_label: "Language"
     update:
       success: "Profile updated."
+    destroy:
+      success: "Your account has been deleted."
 
   habits:
     index:
@@ -144,8 +149,6 @@ en:
     index:
       title: "Aronnax Habits"
       tagline: "Track your habits and build a better you."
-      get_started: "Get started"
-      log_in: "Log in"
 
   shared:
     errors:
@@ -168,33 +171,6 @@ en:
       new:
         title: "Log in"
         submit: "Log in"
-    passwords:
-      new:
-        title: "Forgot your password?"
-        description: "Enter your email and we'll send you reset instructions."
-        submit: "Send reset instructions"
-      edit:
-        title: "Set new password"
-        new_password: "New password"
-        confirm_new_password: "Confirm new password"
-        characters_minimum: "%{count} characters minimum"
-        submit: "Change my password"
-    registrations:
-      new:
-        title: "Sign up"
-        characters_minimum: "%{count} characters minimum"
-        submit: "Sign up"
-      edit:
-        title: "Account Settings"
-        pending_reconfirmation: "Currently waiting confirmation for: %{email}"
-        leave_blank_password: "leave blank to keep current password"
-        characters_minimum: "%{count} characters minimum"
-        current_password_hint: "required to confirm changes"
-        submit: "Update account"
-        danger_zone: "Danger zone"
-        delete_description: "Permanently delete your account and all of your habits."
-        delete_account: "Delete my account"
-        delete_confirm: "Are you sure? This cannot be undone."
     unlocks:
       new:
         title: "Resend unlock instructions"
@@ -212,19 +188,6 @@ en:
         welcome: "Welcome %{email}!"
         instructions: "You can confirm your account email through the link below:"
         action: "Confirm my account"
-      email_changed:
-        hello: "Hello %{email}!"
-        changing_to: "We're contacting you to notify you that your email is being changed to %{email}."
-        changed_to: "We're contacting you to notify you that your email has been changed to %{email}."
-      password_change:
-        hello: "Hello %{email}!"
-        body: "We're contacting you to notify you that your password has been changed."
-      reset_password_instructions:
-        hello: "Hello %{email}!"
-        body: "Someone has requested a link to change your password. You can do this through the link below."
-        action: "Change my password"
-        ignore: "If you didn't request this, please ignore this email."
-        no_change: "Your password won't change until you access the link above and create a new one."
       unlock_instructions:
         hello: "Hello %{email}!"
         locked: "Your account has been locked due to an excessive number of unsuccessful sign in attempts."
