@@ -21,13 +21,13 @@ bin/rails db:seed                # Seed development data (3 users, random habits
 
 ## Architecture
 
-**Authentication**: All controllers require `authenticate_user!` via `ApplicationController`. Devise handles sign-up, sign-in, and password reset. Authenticated users land on `dashboard#index`; unauthenticated users see `welcome#index`.
+**Authentication**: All controllers require `authenticate_user!` via `ApplicationController`. Authentication is SSO-only via OmniAuth — users sign in through the Aronnax OAuth2 provider (`aronnax-core`, port 3050). No registration or password reset — accounts are created automatically on first SSO login. Devise's `:database_authenticatable` is retained only to preserve session route helpers (`new_user_session_path`, etc.) that `Devise::FailureApp` requires; no password is ever set. Authenticated users land on `dashboard#index`; unauthenticated users see `welcome#index`.
 
 **Authorization**: Resources are scoped to the current user. `HabitsController` queries through `current_user.habits`; `HabitEntriesController` scopes entries through `current_user.habits.find(params[:habit_id])`.
 
 **Models**:
 - `ApplicationRecord` — UUID defaults, `implicit_order_column = "created_at"`
-- `User` — `has_one :profile`, `has_many :habits` (both dependent: :destroy); `after_create :add_profile` auto-creates a Profile using `UniqueNicknameGenerator` and `Current.locale`
+- `User` — `has_one :profile`, `has_many :habits` (both dependent: :destroy); `after_create :add_profile` auto-creates a Profile using `UniqueNicknameGenerator` and `Current.locale`; `from_omniauth(auth)` finds-or-creates by (provider, uid) then email; `aronnax` returns a valid `OAuth2::AccessToken`, refreshing via `aronnax_refresh_token` if expired (raises `User::TokenExpiredError` if no refresh token available)
 - `Profile` — `belongs_to :user`; `language` enum (`en: 0, uk: 1`); `nickname` (unique, required); `self.human_enum_name(enum_name, value)` for display labels
 - `Habit` — belongs_to :user; has_many :entries (class_name: "HabitEntry"); `active_on?(date)` helper checks start_date/end_date range
 - `HabitEntry` — belongs_to :habit; `date` must be ≤ today (no future entries allowed)
@@ -43,18 +43,22 @@ bin/rails db:seed                # Seed development data (3 users, random habits
 
 ## Data Model
 
-- **Profile**: id (UUID), user_id (FK), nickname (required, unique), language (integer enum: en/uk)
+- **User**: id (UUID), email (unique), provider, uid, aronnax_access_token, aronnax_refresh_token, aronnax_expires_at, encrypted_password (unused — retained for Devise route helper compatibility)
+- **Profile**: id (UUID), user_id (FK), nickname (required, unique), language (integer enum: en/uk), week_starts_on (integer enum)
 - **Habit**: id (UUID), user_id (FK), name (required), description, start_date (required), end_date (optional)
 - **HabitEntry**: id (UUID), habit_id (FK), date (required, ≤ today, unique per habit), completed (boolean), note
 
 ## Routes
 
 ```
-GET  /                        → dashboard#index (authenticated), welcome#index (public)
-resource  :profile            → show / edit / update
+GET    /                      → dashboard#index (authenticated), welcome#index (public)
+GET    /users/auth/aronnax    → initiates OmniAuth SSO flow
+GET    /users/auth/aronnax/callback → OmniauthCallbacksController#aronnax
+resource  :profile            → show / edit / update / destroy
 PATCH /locale                 → locales#update  (sets cookies[:locale] for guests)
 resources :habits             → full CRUD
   resources :habit_entries    → path: "entries" — new/create/edit/update only
+                                member: toggle_completion (PATCH)
                                 helpers: new_habit_entry_path, habit_entries_path,
                                          edit_habit_entry_path, habit_entry_path
 ```
