@@ -1,6 +1,5 @@
 return unless Rails.env.development?
 
-PASSWORD = "Pa$$w0rD".freeze
 USERS_COUNT = 3
 
 HABIT_NAMES = [
@@ -14,7 +13,6 @@ require "ffaker"
 (1..USERS_COUNT).each do |i|
   email = "user_#{i}@aronnax.space"
   user = User.find_or_create_by!(email:) do |u|
-    u.password = PASSWORD
     puts "Created user: #{email}"
   end
 

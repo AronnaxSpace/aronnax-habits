@@ -18,7 +18,6 @@ uk:
         dashboard: "Панель"
         my_habits: "Мої звички"
         profile: "Профіль"
-        account_settings: "Налаштування акаунту"
         sign_out: "Вийти"
 
   profiles:
@@ -28,10 +27,16 @@ uk:
     edit:
       title: "Редагувати профіль"
       back: "← Назад до профілю"
+      danger_zone: "Небезпечна зона"
+      delete_description: "Остаточно видалити акаунт разом із усіма звичками."
+      delete_account: "Видалити акаунт"
+      delete_confirm: "Ви впевнені? Цю дію неможливо скасувати."
     form:
       language_label: "Мова"
     update:
       success: "Профіль оновлено."
+    destroy:
+      success: "Ваш акаунт видалено."
 
   habits:
     index:
@@ -115,8 +120,6 @@ uk:
     index:
       title: "Aronnax Habits"
       tagline: "Відстежуйте звички та ставайте кращими щодня."
-      get_started: "Розпочати"
-      log_in: "Увійти"
 
   shared:
     errors:
@@ -139,33 +142,6 @@ uk:
       new:
         title: "Увійти"
         submit: "Увійти"
-    passwords:
-      new:
-        title: "Забули пароль?"
-        description: "Введіть свою електронну адресу, і ми надішлемо інструкції для скидання пароля."
-        submit: "Надіслати інструкції"
-      edit:
-        title: "Встановити новий пароль"
-        new_password: "Новий пароль"
-        confirm_new_password: "Підтвердіть новий пароль"
-        characters_minimum: "мінімум %{count} символів"
-        submit: "Змінити пароль"
-    registrations:
-      new:
-        title: "Реєстрація"
-        characters_minimum: "мінімум %{count} символів"
-        submit: "Зареєструватися"
-      edit:
-        title: "Налаштування акаунту"
-        pending_reconfirmation: "Очікується підтвердження для: %{email}"
-        leave_blank_password: "залиште порожнім, щоб не змінювати пароль"
-        characters_minimum: "мінімум %{count} символів"
-        current_password_hint: "потрібен для підтвердження змін"
-        submit: "Оновити акаунт"
-        danger_zone: "Небезпечна зона"
-        delete_description: "Остаточно видалити акаунт разом із усіма звичками."
-        delete_account: "Видалити акаунт"
-        delete_confirm: "Ви впевнені? Цю дію неможливо скасувати."
     unlocks:
       new:
         title: "Надіслати інструкції з розблокування повторно"
@@ -183,19 +159,6 @@ uk:
         welcome: "Ласкаво просимо, %{email}!"
         instructions: "Підтвердіть свою електронну адресу за посиланням нижче:"
         action: "Підтвердити акаунт"
-      email_changed:
-        hello: "Привіт, %{email}!"
-        changing_to: "Повідомляємо, що ваша електронна адреса змінюється на %{email}."
-        changed_to: "Повідомляємо, що вашу електронну адресу змінено на %{email}."
-      password_change:
-        hello: "Привіт, %{email}!"
-        body: "Повідомляємо, що ваш пароль було змінено."
-      reset_password_instructions:
-        hello: "Привіт, %{email}!"
-        body: "Надійшов запит на зміну пароля. Ви можете зробити це за посиланням нижче."
-        action: "Змінити пароль"
-        ignore: "Якщо ви не надсилали цей запит, просто ігноруйте цей лист."
-        no_change: "Ваш пароль не зміниться, доки ви не перейдете за посиланням вище та не створите новий."
       unlock_instructions:
         hello: "Привіт, %{email}!"
         locked: "Ваш акаунт заблоковано через надто велику кількість невдалих спроб входу."

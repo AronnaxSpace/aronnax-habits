@@ -1,13 +1,18 @@
 class User < ApplicationRecord
-  # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
-  devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable,
+  # :database_authenticatable is kept only to preserve Devise's sessions
+  # routes/controller (new_user_session, etc.) which Devise::FailureApp
+  # hardcodes as its redirect target for every unauthenticated request.
+  # No password is ever set, so it can never actually authenticate anyone —
+  # Aronnax SSO (:omniauthable) is the only working sign-in path.
+  devise :database_authenticatable,
          :omniauthable, omniauth_providers: [ :aronnax ]
 
   # associations
   has_one :profile, dependent: :destroy
   has_many :habits, dependent: :destroy
+
+  # validations
+  validates :email, presence: true, uniqueness: { case_sensitive: false }
 
   # callbacks
   after_create :add_profile
@@ -27,8 +32,7 @@ class User < ApplicationRecord
       find_by(email: auth.info.email)&.tap { |u|
         u.update!(provider: auth.provider, uid: auth.uid, **token_attrs)
       } ||
-      create!(provider: auth.provider, uid: auth.uid, email: auth.info.email,
-              password: Devise.friendly_token[0, 20], **token_attrs)
+      create!(provider: auth.provider, uid: auth.uid, email: auth.info.email, **token_attrs)
   end
 
   # Memoized OAuth2 client for calling Aronnax APIs on a user's behalf.
@@ -41,10 +45,13 @@ class User < ApplicationRecord
   end
 
   # Returns a usable Aronnax access token, refreshing and persisting it when
-  # expired. Scaffolding for future Aronnax API calls — no caller yet.
+  # expired. Raises TokenExpiredError if the token is expired and no refresh
+  # token is available (e.g. sessions created before refresh tokens were enabled).
+  # Scaffolding for future Aronnax API calls — no caller yet.
   def aronnax
     token = aronnax_access_token_raw
     return token unless token.expired?
+    raise TokenExpiredError, "Aronnax token expired and no refresh token available" if aronnax_refresh_token.blank?
 
     token = token.refresh!
     update!(
@@ -54,6 +61,8 @@ class User < ApplicationRecord
     )
     token
   end
+
+  TokenExpiredError = Class.new(StandardError)
 
   private
 

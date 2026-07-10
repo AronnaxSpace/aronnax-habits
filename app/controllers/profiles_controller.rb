@@ -17,6 +17,12 @@ class ProfilesController < ApplicationController
     end
   end
 
+  def destroy
+    current_user.destroy
+    sign_out(current_user)
+    redirect_to root_path, notice: t(".success"), status: :see_other
+  end
+
   private
 
   def profile = @profile ||= current_user.profile
