@@ -4,24 +4,26 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Rails 8.1.3 app (Ruby 4.0.5) for tracking personal habits. Uses PostgreSQL with UUID primary keys, Devise for authentication, and Hotwire (Turbo + Stimulus) with Tailwind CSS for the frontend.
+Rails 8.1 app (Ruby 4.0.7, Node 24.21.0) for tracking personal habits. Uses PostgreSQL with UUID primary keys, Devise + OmniAuth for authentication (SSO-only via `aronnax-core`), and Hotwire (Turbo + Stimulus) with Tailwind CSS for the frontend. No Sidekiq/Redis and no Pundit — this is the one Rails app without a background worker. Dev port 3052.
 
 ## Common Commands
 
 ```bash
-bin/dev                          # Start all dev processes (Rails server, JS/CSS watch)
+bin/setup                        # install deps, prepare DB (--skip-server / --reset available)
+bin/dev                          # Start all dev processes (Rails server, JS/CSS watch); PORT defaults to 3052
+bin/ci                           # setup, rubocop, bundler-audit, yarn audit, brakeman (does not run RSpec)
 bundle exec rspec                # Run full test suite
 bundle exec rspec spec/models/habit_spec.rb  # Run a single spec file
-bundle exec rubocop              # Lint
+bundle exec rubocop              # Lint (rubocop-rails-omakase, no single-quote override: use double quotes)
 bundle exec brakeman             # Security scan
 bundle exec bundler-audit        # Gem vulnerability audit
 bin/rails db:migrate             # Apply migrations
-bin/rails db:seed                # Seed development data (3 users, random habits + entries)
+bin/rails db:seed                # Seed development data (3 users user_1..3@aronnax.space, random habits + entries)
 ```
 
 ## Architecture
 
-**Authentication**: All controllers require `authenticate_user!` via `ApplicationController`. Authentication is SSO-only via OmniAuth — users sign in through the Aronnax OAuth2 provider (`aronnax-core`, port 3050). No registration or password reset — accounts are created automatically on first SSO login. Devise's `:database_authenticatable` is retained only to preserve session route helpers (`new_user_session_path`, etc.) that `Devise::FailureApp` requires; no password is ever set. Authenticated users land on `dashboard#index`; unauthenticated users see `welcome#index`.
+**Authentication**: All controllers require `authenticate_user!` via `ApplicationController`. Authentication is SSO-only via OmniAuth — users sign in through the Aronnax OAuth2 provider (`aronnax-core`, port 3050). No registration or password reset — accounts are created automatically on first SSO login. The SSO client code (`lib/omniauth/strategies/aronnax.rb`, the `config.omniauth :aronnax` block in `config/initializers/devise.rb`, `Users::OmniauthCallbacksController`) is the same as in wallet and chronicles; credentials come from `Rails.application.credentials.dig(:aronnax, :app_id/:app_secret/:site)` per environment, and `lib/omniauth` must stay in `config.autoload_lib`'s `ignore:` list. `User.from_omniauth` also falls back to linking by email, which is safe only because core enforces Devise `:confirmable`. Seeded dev users have no provider/uid and get linked on their first SSO login with the same email. Devise's `:database_authenticatable` is retained only to preserve session route helpers (`new_user_session_path`, etc.) that `Devise::FailureApp` requires; no password is ever set. Authenticated users land on `dashboard#index`; unauthenticated users see `welcome#index`.
 
 **Authorization**: Resources are scoped to the current user. `HabitsController` queries through `current_user.habits`; `HabitEntriesController` scopes entries through `current_user.habits.find(params[:habit_id])`.
 
@@ -29,7 +31,7 @@ bin/rails db:seed                # Seed development data (3 users, random habits
 - `ApplicationRecord` — UUID defaults, `implicit_order_column = "created_at"`
 - `User` — `has_one :profile`, `has_many :habits` (both dependent: :destroy); `after_create :add_profile` auto-creates a Profile using `UniqueNicknameGenerator` and `Current.locale`; `from_omniauth(auth)` finds-or-creates by (provider, uid) then email; `aronnax` returns a valid `OAuth2::AccessToken`, refreshing via `aronnax_refresh_token` if expired (raises `User::TokenExpiredError` if no refresh token available)
 - `Profile` — `belongs_to :user`; `language` enum (`en: 0, uk: 1`); `nickname` (unique, required); `self.human_enum_name(enum_name, value)` for display labels
-- `Habit` — belongs_to :user; has_many :entries (class_name: "HabitEntry"); `active_on?(date)` helper checks start_date/end_date range
+- `Habit` — belongs_to :user; has_many :entries (class_name: "HabitEntry"); `frequency` enum (`daily: 0, weekly: 1, twice_a_week: 2, thrice_a_week: 3`) with `FREQUENCY_TARGETS` (completions per week: 7/1/2/3), `weekly_target(active_days_count)` (capped by the active days in the week), and `frequency_label` for the localized name; `active_on?(date)` helper checks start_date/end_date range
 - `HabitEntry` — belongs_to :habit; `date` must be ≤ today (no future entries allowed)
 - `Current < ActiveSupport::CurrentAttributes` (`app/models/current.rb`) — holds `:locale` so models can read the request locale without coupling to the controller
 
@@ -44,8 +46,8 @@ bin/rails db:seed                # Seed development data (3 users, random habits
 ## Data Model
 
 - **User**: id (UUID), email (unique), provider, uid, aronnax_access_token, aronnax_refresh_token, aronnax_expires_at, encrypted_password (unused — retained for Devise route helper compatibility)
-- **Profile**: id (UUID), user_id (FK), nickname (required, unique), language (integer enum: en/uk), week_starts_on (integer enum)
-- **Habit**: id (UUID), user_id (FK), name (required), description, start_date (required), end_date (optional)
+- **Profile**: id (UUID), user_id (FK), nickname (required, unique), language (integer enum: en/uk), week_starts_on (integer enum: sunday/monday)
+- **Habit**: id (UUID), user_id (FK), name (required), description, start_date (required), end_date (optional), frequency (integer enum, default `daily`)
 - **HabitEntry**: id (UUID), habit_id (FK), date (required, ≤ today, unique per habit), completed (boolean), note
 
 ## Routes
@@ -84,7 +86,7 @@ The nested habit_entries resource uses `path: "entries", as: :entries` — URLs 
 
 ## Testing
 
-RSpec with FactoryBot (FFaker for data), Shoulda Matchers, and Devise request helpers.
+RSpec with FactoryBot (FFaker for data), Shoulda Matchers, and Devise request helpers. OmniAuth test mode is set up in `spec/support/omniauth.rb` (see `spec/requests/omniauth_spec.rb`). GitHub Actions runs Brakeman, bundler-audit and RuboCop only — RSpec is not run in CI, so run it locally before pushing.
 
 Request specs authenticate via the `"authenticated user"` shared context:
 

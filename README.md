@@ -6,18 +6,21 @@ English and Ukrainian localization.
 
 ## Tech Stack
 
-- **Ruby** 4.0.5 / **Rails** 8.1.3
+- **Ruby** 4.0.7 / **Rails** 8.1
 - **PostgreSQL** (UUID primary keys, `pgcrypto` extension)
-- **Devise** for authentication
+- **Devise** + **OmniAuth** — sign-in is SSO-only through the Aronnax identity provider
+  ([aronnax-core](https://github.com/AronnaxSpace/aronnax-core))
 - **Hotwire** (Turbo + Stimulus) for the frontend
-- **Tailwind CSS** 4 (compiled via the standalone CLI)
-- **esbuild** for JavaScript bundling
+- **Tailwind CSS** 4 (via `cssbundling-rails`, using `@tailwindcss/cli`)
+- **esbuild** for JavaScript bundling (via `jsbundling-rails`)
 - **RSpec** + FactoryBot + Shoulda Matchers for testing
 
 ## Features
 
-- Email/password authentication (sign-up, sign-in, password reset) via Devise
-- Per-user habits with start/end dates and daily completion entries
+- Sign in with your Aronnax account (SSO only — no local passwords, sign-up or password reset; an
+  account is created automatically on first sign-in)
+- Per-user habits with start/end dates, a frequency (daily, weekly, twice or thrice a week) and daily
+  completion entries
 - Weekly dashboard view of active habits and their entries
 - User profiles with a unique auto-generated nickname
 - Internationalization: English (default) and Ukrainian, resolved per request
@@ -27,20 +30,26 @@ English and Ukrainian localization.
 
 ### Prerequisites
 
-- Ruby 4.0.5 (see `.ruby-version`)
-- Node 24.15.0 (see `.node-version`) and Yarn
-- PostgreSQL
+- Ruby 4.0.7 (see `.ruby-version`)
+- Node 24.21.0 (see `.node-version`) and Yarn
+- PostgreSQL (no Redis needed — this app has no background worker)
+- The per-environment credentials key (`config/credentials/<env>.key`, gitignored)
+- A running Aronnax SSO provider for sign-in to work in development — this app has no local password
+  fallback. Run `aronnax-core` on `http://localhost:3050` and register this app there as an OAuth
+  application with redirect URI `http://localhost:3052/users/auth/aronnax/callback`; the matching
+  `app_id` / `app_secret` / `site` go under `aronnax:` in the development credentials. See
+  [aronnax-dev](https://github.com/AronnaxSpace/aronnax-dev) `docs/DEVELOPMENT.md`.
 
 ### Setup
 
 ```bash
-bundle install
-yarn install
-bin/rails db:prepare      # create, load schema, and seed
+bin/setup                 # bundle + yarn + db:prepare + start server
+                          # use --skip-server to skip starting the server, --reset to reset the DB
 ```
 
-`db:prepare` seeds development data (3 users with random habits and entries).
-To seed manually, run `bin/rails db:seed`.
+`db:prepare` seeds development data (`user_1..3@aronnax.space` with random habits and entries). Seeded
+users have no SSO identity yet; signing in through core with the same email links to them. To seed
+manually, run `bin/rails db:seed`.
 
 ### Running the app
 
@@ -67,12 +76,14 @@ bin/rails db:schema:load RAILS_ENV=test
 ## Code Quality
 
 ```bash
-bundle exec rubocop          # lint (rubocop-rails-omakase)
-bundle exec brakeman         # static security analysis
-bundle exec bundler-audit    # gem vulnerability audit
+bin/rubocop          # lint (rubocop-rails-omakase)
+bin/brakeman         # static security analysis
+bin/bundler-audit    # gem vulnerability audit
+bin/ci               # all of the above plus setup and yarn audit
 ```
 
-These checks also run in CI (`.github/workflows/ci.yml`).
+Brakeman, bundler-audit and RuboCop also run in GitHub Actions (`.github/workflows/ci.yml`); RSpec does
+**not**, so run it locally before pushing.
 
 ## Architecture
 
@@ -84,9 +95,11 @@ in [CLAUDE.md](CLAUDE.md).
   locale so models can read it without touching the controller.
 - **Services** (`app/services/`): `DashboardWeekBuilder` assembles the weekly
   dashboard data; `UniqueNicknameGenerator` produces collision-free nicknames.
+- **Authentication**: SSO-only via a custom OmniAuth OAuth2 strategy
+  (`lib/omniauth/strategies/aronnax.rb`); this app is an OAuth client of `aronnax-core`.
 - **Authorization**: all resources are scoped through `current_user`.
 
 ## Deployment
 
-A `Dockerfile` and a Capistrano `Capfile` are included for containerized and
-SSH-based deployment respectively.
+Deployed with Capistrano (`bin/cap production deploy`) to the shared VPS (Passenger + rbenv). A
+`Dockerfile` is also included.
