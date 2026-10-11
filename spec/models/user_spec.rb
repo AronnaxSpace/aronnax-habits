@@ -99,4 +99,28 @@ describe User, type: :model do
       end
     end
   end
+
+  describe "#authenticatable_salt" do
+    it "keeps the legacy salt until the session salt is rotated" do
+      expect(user.session_salt).to be_nil
+      expect(user.authenticatable_salt).to eq(user.encrypted_password[0, 29])
+    end
+
+    it "uses the session salt once it is set" do
+      user.update!(session_salt: "rotated")
+      expect(user.authenticatable_salt).to eq("rotated")
+    end
+  end
+
+  describe "#rotate_session_salt!" do
+    it "changes the salt on every call" do
+      user.rotate_session_salt!
+      first = user.authenticatable_salt
+
+      user.rotate_session_salt!
+
+      expect(first).to be_present
+      expect(user.authenticatable_salt).not_to eq(first)
+    end
+  end
 end

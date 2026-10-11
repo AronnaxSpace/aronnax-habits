@@ -25,6 +25,8 @@ bin/rails db:seed                # Seed development data (3 users user_1..3@aron
 
 **Authentication**: All controllers require `authenticate_user!` via `ApplicationController`. Authentication is SSO-only via OmniAuth — users sign in through the Aronnax OAuth2 provider (`aronnax-core`, port 3050). No registration or password reset — accounts are created automatically on first SSO login. The SSO client code (`lib/omniauth/strategies/aronnax.rb`, the `config.omniauth :aronnax` block in `config/initializers/devise.rb`, `Users::OmniauthCallbacksController`) is the same as in wallet and chronicles; credentials come from `Rails.application.credentials.dig(:aronnax, :app_id/:app_secret/:site)` per environment, and `lib/omniauth` must stay in `config.autoload_lib`'s `ignore:` list. `User.from_omniauth` also falls back to linking by email, which is safe only because core enforces Devise `:confirmable`. Seeded dev users have no provider/uid and get linked on their first SSO login with the same email. Devise's `:database_authenticatable` is retained only to preserve session route helpers (`new_user_session_path`, etc.) that `Devise::FailureApp` requires; no password is ever set. Authenticated users land on `dashboard#index`; unauthenticated users see `welcome#index`.
 
+**Sessions**: Cookie-store sessions that persist for 2 weeks, sliding (`config/initializers/session_store.rb`; Devise `:rememberable` was removed, and the key must stay `_aronnax_habits_session` or everyone is signed out). Because no password is set, Devise's `authenticatable_salt` would be a constant `""` and a cookie could never be revoked, so `User#authenticatable_salt` returns `session_salt` once it is set. Signing out rotates it (Warden `before_logout` hook in `config/initializers/session_revocation.rb`), which invalidates every cookie issued for that user — all browsers and copied cookies, not just the one that signed out. Users who have never signed out keep the legacy `""` salt, so deploying it does not log anyone out. This revokes the app session only: the core SSO session and other Aronnax apps are untouched, and nothing revokes the OAuth tokens stored on the user.
+
 **Authorization**: Resources are scoped to the current user. `HabitsController` queries through `current_user.habits`; `HabitEntriesController` scopes entries through `current_user.habits.find(params[:habit_id])`.
 
 **Models**:
@@ -45,7 +47,7 @@ bin/rails db:seed                # Seed development data (3 users user_1..3@aron
 
 ## Data Model
 
-- **User**: id (UUID), email (unique), provider, uid, aronnax_access_token, aronnax_refresh_token, aronnax_expires_at, encrypted_password (unused — retained for Devise route helper compatibility)
+- **User**: id (UUID), email (unique), provider, uid, aronnax_access_token, aronnax_refresh_token, aronnax_expires_at, session_salt (rotated on sign-out to revoke session cookies), encrypted_password (unused — retained for Devise route helper compatibility)
 - **Profile**: id (UUID), user_id (FK), nickname (required, unique), language (integer enum: en/uk), week_starts_on (integer enum: sunday/monday)
 - **Habit**: id (UUID), user_id (FK), name (required), description, start_date (required), end_date (optional), frequency (integer enum, default `daily`)
 - **HabitEntry**: id (UUID), habit_id (FK), date (required, ≤ today, unique per habit), completed (boolean), note

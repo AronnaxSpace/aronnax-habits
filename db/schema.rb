@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_07_10_171729) do
+ActiveRecord::Schema[8.1].define(version: 2026_10_11_193319) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
   enable_extension "pgcrypto"
@@ -58,6 +58,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_07_10_171729) do
     t.string "provider"
     t.string "uid"
     t.datetime "updated_at", null: false
+    t.string "session_salt"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["provider", "uid"], name: "index_users_on_provider_and_uid", unique: true
   end

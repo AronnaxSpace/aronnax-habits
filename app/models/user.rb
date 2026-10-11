@@ -44,6 +44,20 @@ class User < ApplicationRecord
     )
   end
 
+  # Devise stores [id, authenticatable_salt] in the session cookie and rejects
+  # the cookie when the salt no longer matches. With no password the salt is a
+  # constant "", so a cookie could never be revoked. session_salt takes its
+  # place once rotated (on sign-out, see config/initializers/session_revocation.rb);
+  # until then the legacy salt is kept so existing sessions stay valid.
+  def authenticatable_salt
+    session_salt.presence || super
+  end
+
+  # Invalidates every session cookie issued so far, in all browsers.
+  def rotate_session_salt!
+    update_column(:session_salt, SecureRandom.hex(16))
+  end
+
   # Returns a usable Aronnax access token, refreshing and persisting it when
   # expired. Raises TokenExpiredError if the token is expired and no refresh
   # token is available (e.g. sessions created before refresh tokens were enabled).
