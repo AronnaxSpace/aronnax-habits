@@ -6,7 +6,7 @@ English and Ukrainian localization.
 
 ## Tech Stack
 
-- **Ruby** 4.0.9 / **Rails** 8.1
+- **Ruby** 4.0.10 / **Rails** 8.1
 - **PostgreSQL** (UUID primary keys, `pgcrypto` extension)
 - **Devise** + **OmniAuth** — sign-in is SSO-only through the Aronnax identity provider
   ([aronnax-core](https://github.com/AronnaxSpace/aronnax-core))
@@ -30,7 +30,7 @@ English and Ukrainian localization.
 
 ### Prerequisites
 
-- Ruby 4.0.9 (see `.ruby-version`)
+- Ruby 4.0.10 (see `.ruby-version`)
 - Node 24.21.0 (see `.node-version`) and Yarn
 - PostgreSQL (no Redis needed — this app has no background worker)
 - The per-environment credentials key (`config/credentials/<env>.key`, gitignored)

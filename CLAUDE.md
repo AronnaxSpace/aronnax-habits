@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Rails 8.1 app (Ruby 4.0.9, Node 24.21.0) for tracking personal habits. Uses PostgreSQL with UUID primary keys, Devise + OmniAuth for authentication (SSO-only via `aronnax-core`), and Hotwire (Turbo + Stimulus) with Tailwind CSS for the frontend. No Sidekiq/Redis and no Pundit — this is the one Rails app without a background worker. Dev port 3052.
+Rails 8.1 app (Ruby 4.0.10, Node 24.21.0) for tracking personal habits. Uses PostgreSQL with UUID primary keys, Devise + OmniAuth for authentication (SSO-only via `aronnax-core`), and Hotwire (Turbo + Stimulus) with Tailwind CSS for the frontend. No Sidekiq/Redis and no Pundit — this is the one Rails app without a background worker. Dev port 3052.
 
 ## Common Commands
 
